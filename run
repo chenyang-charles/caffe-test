@@ -1,1 +1,1 @@
-python extract_features.py --caffe /home/chengyang/caffe --model_def place_pool5.prototxt --model places205CNN_iter_300000_upgraded.caffemodel  --files /home/chengyang/SUN2012/Images/a/abbey/index  --gpu --out result_pool5
+python extract_features.py --caffe /home/chengyang/caffe --model_def place_pool5.prototxt --model places205CNN_iter_300000_upgraded.caffemodel  --files /home/chengyang/SUN2012/Images/p/poolroom/home/index  --gpu --out Pool5_Result/poolroom
