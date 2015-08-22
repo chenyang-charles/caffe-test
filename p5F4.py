@@ -3,17 +3,16 @@ import numpy as np
 import os.path
 import Image
 
-def get_maxImg(filename, unit_number, unit_size, img_number):
+def get_maxImg(filename):
 	"""
 	Get images with largest average activations
 	"""
-	mat = pickle.load( open(filename, 'rb'))
+	mat = pickle.load(open(filename, 'rb'))
 	#print mat.shape
 
 	maxImgs = []
-	#maxImgs = np.zeros((unit_number, unit_size * img_number))
 
-	for i in range(0, unit_number): 
+	for i in range(0, mat.shape[1]): 
 		activation = sorted(list(np.ndenumerate(mat[:, i, :, :])), key=lambda x:x[1], reverse=True)
 		maxImg = [val[0] for val in activation]
 		maxImgs.append(maxImg)
@@ -36,10 +35,10 @@ def getImg(index):
 	Read the image listed in the list file with given index
 	"""
 	lines = 0
-	with open("/home/chengyang/SUN2012/Images/a/abbey/index") as fp:
+	with open("/home/chengyang/SUN2012/Images/p/poolroom/home/index") as fp:
 		for line in fp:
 			if lines == index and line.strip().split():
-				filePath = os.path.join("/home/chengyang/SUN2012/Images/a/abbey", line.strip().split()[0])
+				filePath = os.path.join("/home/chengyang/SUN2012/Images/p/poolroom/home", line.strip().split()[0])
 				img = Image.open(filePath).resize((227, 227))
 				return img
 			
@@ -69,12 +68,17 @@ def theoreticRF(info, size, stride):
 
 	return RF
 
-maxImgs = get_maxImg('result_pool5', 256, 13*13, 33)
+
+"""
+Main
+"""
+
+maxImgs = get_maxImg('Pool5_Result/all')
 
 for i in range(0,  len(maxImgs)):
 	for j in range(0, 5):
 		RF = theoreticRF(maxImgs[i][j], 163, 5)
-		RF.save("RFs/" + str(i) + "_" + str(j) + ".jpg")
+		RF.save("RFs/pool5/" + str(i) + "_" + str(j) + ".jpg")
 	
 	print i, "/", len(maxImgs), " finished"
 
